@@ -7,7 +7,7 @@ $loginTime = Get-Date
 # 將登入時間轉換為字串格式
 $formattedTime = $loginTime.ToString()
 # 指定 JSON 檔案的路徑，用于存儲登入時間列表
-$saveTimeListPath = "D:\PoweShell\loginTimeList.json" 
+$saveTimeListPath = "D:\PoweShell\WorkRinger\loginTimeList.json" 
 # 定義排程任務的名稱
 $taskName = "End-of-Work-Bell"
 

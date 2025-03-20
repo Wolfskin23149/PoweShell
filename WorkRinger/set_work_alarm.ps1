@@ -48,7 +48,7 @@ else {
 }
 
 # 新增當前的登入時間到登入時間列表
-$newLoginTime = @{loginTime = $formattedTime}
+$newLoginTime = @{loginTime = $formattedTime }
 $jsonContent += $newLoginTime
 
 # 將結果轉換為 JSON 並寫入檔案

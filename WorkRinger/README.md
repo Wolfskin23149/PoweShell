@@ -94,6 +94,7 @@
    $toast = New-Object -ComObject WScript.Shell
    $toast.Popup("TIME TO HEAD HOME !!", 32, "Notification", 64)
    Unregister-ScheduledTask -TaskName $taskName -Confirm:$false
+   Clear-Content -Path $saveTimeListPath
    '@
 
    # 將腳本保存到臨時檔案

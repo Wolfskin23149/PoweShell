@@ -80,10 +80,15 @@ $toast.Popup("Today's first login time : $($earliestLogin.ToString())`n Alarm ti
 
 # 定義執行動作腳本
 $actionScript = @'
+# 清除指定路徑的內容
+Clear-Content -Path $saveTimeListPath
+
+# 顯示通知
 $toast = New-Object -ComObject WScript.Shell
 $toast.Popup("TIME TO HEAD HOME !!", 32, "Notification", 64)
+
+# 取消排程任務
 Unregister-ScheduledTask -TaskName $taskName -Confirm:$false
-Clear-Content -Path $saveTimeListPath
 '@
 
 # 將腳本保存到臨時檔案

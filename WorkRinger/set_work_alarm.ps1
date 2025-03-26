@@ -30,7 +30,7 @@ if (Test-Path $saveTimeListPath) {
     catch {
         # 如果讀取 JSON 檔案時發生錯誤，則顯示錯誤訊息
         $toast = New-Object -ComObject WScript.Shell
-        $toast.Popup("This is not a valid JSON file.", 16, "Eorror", 64)
+        $toast.Popup("This is not a valid JSON file.", 16, "Error", 64)
         # 移除已經註冊的排程任務
         Unregister-ScheduledTask -TaskName $taskName -Confirm:$false
         # 結束腳本
@@ -40,7 +40,7 @@ if (Test-Path $saveTimeListPath) {
 else {
     # 如果 JSON 檔案路徑無效，則顯示錯誤訊息
     $toast = New-Object -ComObject WScript.Shell
-    $toast.Popup("Your saveTimeListPath is not valid.", 16, "Eorror", 64)
+    $toast.Popup("Your saveTimeListPath is not valid.", 16, "Error", 64)
     # 移除已經註冊的排程任務
     Unregister-ScheduledTask -TaskName $taskName -Confirm:$false
     # 結束腳本
@@ -67,7 +67,7 @@ $alarmTime = (Get-Date $earliestLogin).AddHours($workTime)
 if ($alarmTime -lt $loginTime ) {
     # 如果警報時間早於登入時間，則顯示錯誤訊息
     $toast = New-Object -ComObject WScript.Shell
-    $toast.Popup("The alarm time is earlier than the login time.", 16, "Eorror", 64)
+    $toast.Popup("The alarm time is earlier than the login time.", 16, "Error", 64)
     # 移除已經註冊的排程任務
     Unregister-ScheduledTask -TaskName $taskName -Confirm:$false
     # 結束腳本
@@ -80,8 +80,12 @@ $toast.Popup("Today's first login time : $($earliestLogin.ToString())`n Alarm ti
 
 # 定義執行動作腳本
 $actionScript = @'
-# 清除指定路徑的內容
-Clear-Content -Path $saveTimeListPath
+# 清空 JSON 檔案內容，但保留檔案
+if(-not ($saveTimeListPath)) {
+    $saveTimeListPath = "D:\PoweShell\WorkRinger\loginTimeList.json"
+}
+
+$null | ConvertTo-Json | Out-File -FilePath $saveTimeListPath -Encoding UTF8
 
 # 顯示通知
 $toast = New-Object -ComObject WScript.Shell

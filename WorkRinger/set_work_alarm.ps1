@@ -4,6 +4,13 @@ Set-ExecutionPolicy Bypass -Scope Process -Force
 
 # 獲取當前登入時間
 $loginTime = Get-Date
+# 最早登入時間
+$earliestLoginTime = Get-Date -Hour 08 -Minute 30 -Second 0 -Millisecond 0
+
+if ($loginTime -lt $earliestLoginTime) {
+    $loginTime = $earliestLoginTime
+}
+
 # 將登入時間轉換為字串格式
 $formattedTime = $loginTime.ToString()
 # 指定 JSON 檔案的路徑，用于存儲登入時間列表
